@@ -1,4 +1,4 @@
-as   -o state_asm.o state_asm.s
-state_asm.s: Assembler messages:
-state_asm.s:4: Error: number of operands mismatch for `mov'
-make: *** [<builtin>: state_asm.o] Error 1
+msp430-elf-gcc -mmcu=msp430g2553 -Wall -o toy.elf main.o state_asm.o
+/opt/ti/msp430_gcc/bin/../lib/gcc/msp430-elf/8.2.0/../../../../msp430-elf/bin/ld: cannot open linker script file msp430g2553.ld: No such file or directory
+collect2: error: ld returned 1 exit status
+make: *** [Makefile:12: toy.elf] Error 1
