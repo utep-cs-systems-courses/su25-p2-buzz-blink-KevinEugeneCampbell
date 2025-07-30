@@ -17,9 +17,13 @@ void delay_ms(unsigned int ms) {
 // Generate tone (simple square wave on P2.4)
 void buzz(unsigned int freq, unsigned int dur) {
   unsigned int i, cycles = dur * 10;
+  unsigned int delay = 1000000 / (freq * 2);
   for (i = 0; i < cycles; i++) {
     P2OUT ^= BIT4;
-    __delay_cycles(1000000 / (freq * 2));
+    volatile unsigned int d = delay;
+    while(d--){
+      __no_operation();
+    }
   }
   P2OUT &= ~BIT4;
 }
