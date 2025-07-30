@@ -68,7 +68,7 @@ int get_btn() {
 // Assembly state transition function
 extern void set_idle_state();
 
-void main(void) {
+int main(void) {
   init();
 
   while (1) {
@@ -128,4 +128,5 @@ void main(void) {
       break;
     }
   }
+  return 0;
 }
