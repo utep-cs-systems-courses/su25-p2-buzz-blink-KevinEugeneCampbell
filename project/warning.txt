@@ -1,0 +1,65 @@
+msp430-elf-gcc -mmcu=msp430g2553 -Wall main.c state_asm.s -o toy.elf
+In file included from main.c:3:
+toy.h:5:17: error: unknown type name 'Toystate'
+ extern volatile Toystate state;
+                 ^~~~~~~~
+main.c:9:16: error: redeclaration of enumerator 'IDLE'
+ typedef enum { IDLE, SHOW_SEQ, USER_INPUT, WIN, LOSE } ToyState;
+                ^~~~
+In file included from main.c:3:
+toy.h:4:15: note: previous definition of 'IDLE' was here
+ typedef enum{ IDLE, SHOW_SEQ, USER_INPUT, WIN, LOSE } ToyState;
+               ^~~~
+main.c:9:22: error: redeclaration of enumerator 'SHOW_SEQ'
+ typedef enum { IDLE, SHOW_SEQ, USER_INPUT, WIN, LOSE } ToyState;
+                      ^~~~~~~~
+In file included from main.c:3:
+toy.h:4:21: note: previous definition of 'SHOW_SEQ' was here
+ typedef enum{ IDLE, SHOW_SEQ, USER_INPUT, WIN, LOSE } ToyState;
+                     ^~~~~~~~
+main.c:9:32: error: redeclaration of enumerator 'USER_INPUT'
+ typedef enum { IDLE, SHOW_SEQ, USER_INPUT, WIN, LOSE } ToyState;
+                                ^~~~~~~~~~
+In file included from main.c:3:
+toy.h:4:31: note: previous definition of 'USER_INPUT' was here
+ typedef enum{ IDLE, SHOW_SEQ, USER_INPUT, WIN, LOSE } ToyState;
+                               ^~~~~~~~~~
+main.c:9:44: error: redeclaration of enumerator 'WIN'
+ typedef enum { IDLE, SHOW_SEQ, USER_INPUT, WIN, LOSE } ToyState;
+                                            ^~~
+In file included from main.c:3:
+toy.h:4:43: note: previous definition of 'WIN' was here
+ typedef enum{ IDLE, SHOW_SEQ, USER_INPUT, WIN, LOSE } ToyState;
+                                           ^~~
+main.c:9:49: error: redeclaration of enumerator 'LOSE'
+ typedef enum { IDLE, SHOW_SEQ, USER_INPUT, WIN, LOSE } ToyState;
+                                                 ^~~~
+In file included from main.c:3:
+toy.h:4:48: note: previous definition of 'LOSE' was here
+ typedef enum{ IDLE, SHOW_SEQ, USER_INPUT, WIN, LOSE } ToyState;
+                                                ^~~~
+main.c:9:56: error: conflicting types for 'ToyState'
+ typedef enum { IDLE, SHOW_SEQ, USER_INPUT, WIN, LOSE } ToyState;
+                                                        ^~~~~~~~
+In file included from main.c:3:
+toy.h:4:55: note: previous declaration of 'ToyState' was here
+ typedef enum{ IDLE, SHOW_SEQ, USER_INPUT, WIN, LOSE } ToyState;
+                                                       ^~~~~~~~
+main.c:12:19: error: conflicting types for 'state'
+ volatile ToyState state = IDLE;
+                   ^~~~~
+In file included from main.c:3:
+toy.h:5:26: note: previous declaration of 'state' was here
+ extern volatile Toystate state;
+                          ^~~~~
+main.c: In function 'add_to_seq':
+main.c:44:18: warning: implicit declaration of function 'rand' [-Wimplicit-function-declaration]
+   seq[seq_len] = rand() % 4;
+                  ^~~~
+main.c: At top level:
+main.c:77:6: warning: return type of 'main' is not 'int' [-Wmain]
+ void main(void) {
+      ^~~~
+state_asm.s: Assembler messages:
+state_asm.s:1: Error: unknown pseudo-op: `.cdecls'
+make: *** [Makefile:5: toy.elf] Error 1
