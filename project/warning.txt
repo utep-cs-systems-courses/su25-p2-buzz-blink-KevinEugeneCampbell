@@ -1,5 +1,4 @@
 as   -o state_asm.o state_asm.s
 state_asm.s: Assembler messages:
-state_asm.s:4: Error: no such instruction: `set global "state"to IDLE (0)'
-state_asm.s:5: Error: number of operands mismatch for `mov'
+state_asm.s:4: Error: number of operands mismatch for `mov'
 make: *** [<builtin>: state_asm.o] Error 1
