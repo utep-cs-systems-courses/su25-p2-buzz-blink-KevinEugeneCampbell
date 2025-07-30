@@ -1,12 +1,6 @@
 #include <msp430.h>
-
+#include <stdlib.h>
 #include "toy.h"
-
-
-
-// Toy states
-
-typedef enum { IDLE, SHOW_SEQ, USER_INPUT, WIN, LOSE } ToyState;
 
 // Toy variables
 volatile ToyState state = IDLE;

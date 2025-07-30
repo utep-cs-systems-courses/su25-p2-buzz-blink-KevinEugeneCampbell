@@ -1,4 +1,3 @@
-	.cdecls C,LIST,"toy.h"
 	.global set_idle_state
 	.text
 set_idle_state:
