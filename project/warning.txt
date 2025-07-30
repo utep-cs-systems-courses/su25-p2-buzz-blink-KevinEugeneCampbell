@@ -1,6 +1,4 @@
 msp430-elf-gcc -mmcu=msp430g2553 -Wall main.c state_asm.s -o toy.elf
-main.c: In function 'buzz':
-main.c:22:5: error: __delay_cycles() only takes constant arguments
-     __delay_cycles(1000000 / (freq * 2));
-     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/opt/ti/msp430_gcc/bin/../lib/gcc/msp430-elf/8.2.0/../../../../msp430-elf/bin/ld: cannot open linker script file msp430g2553.ld: No such file or directory
+collect2: error: ld returned 1 exit status
 make: *** [Makefile:5: toy.elf] Error 1
