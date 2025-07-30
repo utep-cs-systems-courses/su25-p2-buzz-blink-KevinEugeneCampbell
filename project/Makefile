@@ -8,8 +8,9 @@ CC              = msp430-elf-gcc
 
 all: toy.elf
 
+LDSCRIPT_DIR = /opt/ti/msp430_gcc/include
 toy.elf: ${COMMON_OBJECTS}
-	${CC} ${CFLAGS} -o $@ $^
+	${CC} ${CFLAGS} -L$(LDSCRIPT_DIR) -T msp430g2553.ld -o $@ $^
 
 clean:
 	rm -f *.o *.elf

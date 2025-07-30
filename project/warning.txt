@@ -1,4 +1,5 @@
-msp430-elf-gcc -mmcu=msp430g2553 -Wall -o toy.elf main.o state_asm.o
-/opt/ti/msp430_gcc/bin/../lib/gcc/msp430-elf/8.2.0/../../../../msp430-elf/bin/ld: cannot open linker script file msp430g2553.ld: No such file or directory
+msp430-elf-gcc -mmcu=msp430g2553 -Wall -L/opt/ti/msp430_gcc/include -T msp430g2553.ld -o toy.elf main.o state_asm.o
+/opt/ti/msp430_gcc/bin/../lib/gcc/msp430-elf/8.2.0/../../../../msp430-elf/bin/ld: error: state_asm.o uses MSP430X instructions but /opt/ti/msp430_gcc/bin/../lib/gcc/msp430-elf/8.2.0/../../../../msp430-elf/lib/430/crt0.o uses MSP430
+/opt/ti/msp430_gcc/bin/../lib/gcc/msp430-elf/8.2.0/../../../../msp430-elf/bin/ld: failed to merge target specific data of file state_asm.o
 collect2: error: ld returned 1 exit status
-make: *** [Makefile:12: toy.elf] Error 1
+make: *** [Makefile:13: toy.elf] Error 1
