@@ -8,6 +8,9 @@ CC              = msp430-elf-gcc
 
 all: toy.elf
 
+state_asm.o: state_asm.S
+	msp430-elf-gcc -mmcu=$(CPU) -c $< -o $@
+
 LDSCRIPT_DIR = /opt/ti/msp430_gcc/include
 toy.elf: ${COMMON_OBJECTS}
 	${CC} ${CFLAGS} -L$(LDSCRIPT_DIR) -T msp430g2553.ld -o $@ $^
