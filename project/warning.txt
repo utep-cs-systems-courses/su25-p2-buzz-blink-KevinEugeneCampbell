@@ -1,5 +1,20 @@
-msp430-elf-gcc -mmcu=msp430g2553 -Wall -L/opt/ti/msp430_gcc/include -T msp430g2553.ld -o toy.elf main.o state_asm.o
-/opt/ti/msp430_gcc/bin/../lib/gcc/msp430-elf/8.2.0/../../../../msp430-elf/bin/ld: error: state_asm.o uses MSP430X instructions but /opt/ti/msp430_gcc/bin/../lib/gcc/msp430-elf/8.2.0/../../../../msp430-elf/lib/430/crt0.o uses MSP430
-/opt/ti/msp430_gcc/bin/../lib/gcc/msp430-elf/8.2.0/../../../../msp430-elf/bin/ld: failed to merge target specific data of file state_asm.o
-collect2: error: ld returned 1 exit status
-make: *** [Makefile:13: toy.elf] Error 1
+msp430-elf-gcc -mmcu=msp430g2553 -Wall   -c -o main.o main.c
+In file included from /opt/ti/msp430_gcc/include/msp430.h:1423,
+                 from main.c:1:
+toy.h:4:16: error: expected identifier before '(' token
+ typedef enum { WAIT, PLAY, BUZZ, RESET } ToyState;
+                ^~~~
+main.c: In function 'main':
+main.c:72:10: error: 'PLAY' undeclared (first use in this function)
+  state = PLAY;
+          ^~~~
+main.c:72:10: note: each undeclared identifier is reported only once for each function it appears in
+main.c:84:10: error: 'BUZZ' undeclared (first use in this function); did you mean 'BUSY'?
+  state = BUZZ;
+          ^~~~
+          BUSY
+main.c:99:10: error: 'RESET' undeclared (first use in this function); did you mean 'REST'?
+     case RESET:
+          ^~~~~
+          REST
+make: *** [<builtin>: main.o] Error 1
