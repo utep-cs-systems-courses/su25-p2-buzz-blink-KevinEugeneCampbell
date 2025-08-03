@@ -4,51 +4,44 @@
 
 void led_init()
 {
-  P1DIR |= LEDS;// bits attached to leds are output
-  led_update();
+  P1DIR |= LEDS;
+  P1OUT &= ~LED_GREEN;
+  P1OUT |= LED_RED;
 }
 
-void led_update()
-{
+void led_off(){
   P1OUT &= ~LEDS;
 }
 
-void red_on(int on){
-  if(on){
-    P1OUT |= LED_RED;
-  }else{
-    P1OUT &= ~LED_RED;
+int secondCount = 0;
+void alternate_leds(){
+  secondCount ++;
+  if (secondCount >= 250) { /* once each sec... */
+    secondCount = 0;    /* reset count */
+    P1OUT ^= LEDS;            /* toggle LEDS */
   }
 }
 
-void green_on(int on){
-  if(on){
-    P1OUT |= LED_GREEN;
-  }else{
+int sCount = 0;
+int blinkLimit = 5;
+int blinkCount = 0;
+
+void blink_leds(){
+  blinkCount ++;
+  if (blinkCount >= blinkLimit) {
+    blinkCount = 0;
+    P1OUT |= LED_RED ;
     P1OUT &= ~LED_GREEN;
   }
-}
-
-void leds_on(int on){
-  if(on){
-    P1OUT |= LEDS;
-  }else{
-    P1OUT &= ~LEDS;
+  else{
+    P1OUT &= ~LED_RED;
+    P1OUT |= LED_GREEN;
   }
-}
-
-void swap_leds(int on){
-  switch(on){
-  case 0:
-    red_on(1);
-    green_on(0);
-    break;
-  case 1:
-    red_on(0);
-    green_on(1);
-    break;
-  default:
-    leds_on(0);
-    break;
+  sCount ++;
+  if (sCount >= 250) {
+    sCount = 0;
+    blinkLimit ++;
+    if (blinkLimit >= 8)
+      blinkLimit = 0;
   }
-}
+} 

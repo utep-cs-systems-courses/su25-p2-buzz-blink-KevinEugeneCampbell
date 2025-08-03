@@ -1,20 +1,18 @@
 #include <msp430.h>
 #include "led.h"
 #include "buzzer.h"
-#include "state_machines.h"
 #include "switches.h"
 
-int  sw1_status = 0;
-int  sw2_status = 0;
-int  sw3_status = 0;
-int  sw4_status = 0;
+char sw1_state_down;
+char sw2_state_down;
+char sw3_state_down;
+char sw4_state_down;
+char switch_state_changed;
 
 static char switch_update_interrupt_sense()
 {
   char p2val = P2IN;
-
   // Update switch interrupt to detect changes from current buttons
-  
   P2IES |= (p2val & SWITCHES);    // If switch up, sense down
   P2IES &= (p2val | ~SWITCHES);   // If switch down, sense up
   return p2val;
@@ -29,49 +27,14 @@ void switch_init()
   P2OUT |= SWITCHES;    // Pull-ups for switches
   P2DIR &= ~SWITCHES;   // Set switches' bits for input
   switch_update_interrupt_sense();
-  led_update();
 }
 
 void switch_interrupt_handler()
 {
   char p2val = switch_update_interrupt_sense();
-
-  int prev1 = sw1_status;
-  int prev2 = sw2_status;
-  int prev3 = sw3_status;
-  int prev4 = sw4_status;
-
-  // Checks if button has been pressed
-
-  sw1_status = (p2val & SW1) ? 0 : 1;
-  sw2_status = (p2val & SW2) ? 0 : 1;
-  sw3_status = (p2val & SW3) ? 0 : 1;
-  sw4_status = (p2val & SW4) ? 0 : 1;
-  
-  // Switch Selection and reset
-  
-  if (prev1 != sw1_status && sw1_status){
-    sw1_press_state ^= 1;
-    sw2_press_state = 0;
-    sw3_press_state = 0;
-    sw4_press_state = 0;
-  }
-  else if (prev2 != sw2_status && sw2_status){
-    sw2_press_state ^= 1;
-    sw1_press_state = 0;
-    sw3_press_state = 0;
-    sw4_press_state = 0;
-  }
-  else if (prev3 != sw3_status && sw3_status){
-    sw3_press_state ^= 1;
-    sw1_press_state = 0;
-    sw2_press_state = 0;
-    sw4_press_state = 0;
-  }
-  else if (prev4 != sw4_status && sw4_status){
-    sw4_press_state ^= 1;
-    sw1_press_state = 0;
-    sw2_press_state = 0;
-    sw3_press_state = 0;
-  }
+  sw1_state_down = (p2val & SW1) ? 0 : 1; /* 0 when SW1 is up */
+  sw2_state_down = (p2val & SW2) ? 0 : 1; /* 0 when SW2 is up */
+  sw3_state_down = (p2val & SW3) ? 0 : 1; /* 0 when SW3 is up */
+  sw4_state_down = (p2val & SW4) ? 0 : 1; /* 0 when SW4 is up */
+  switch_state_changed = 1;
 }

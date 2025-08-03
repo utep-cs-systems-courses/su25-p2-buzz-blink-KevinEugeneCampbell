@@ -1,33 +1,28 @@
 # makfile configuration
-COMMON_OBJECTS  = main.o
+COMMON_OBJECTS  =
 CPU             = msp430g2553
-CFLAGS          = -mmcu=${CPU} -I../h -L/opt/ti/msp430_gcc/include
-LDFLAGS         = -L/opt/ti/msp430_gcc/include
+CFLAGS          = -mmcu=${CPU} -I../h
+LDFLAGS		= -L/opt/ti/msp430_gcc/include
 
 #switch the compiler (for the internal make rules)
 CC              = msp430-elf-gcc
 AS              = msp430-elf-as
 
-all: toy.elf
+all: main.elf
 
 #additional rules for files
-toy.elf: ${COMMON_OBJECTS} buzzer.o led.o switches.o state_machines.o  wdInterruptHandler.o p2_interrupt_handler.o
-	${CC} ${CFLAGS} ${LDFLAGS} -o $@ $^ ../lib/libTimer.a
+main.elf: ${COMMON_OBJECTS} main.o switches.o led.o buzzer.o ../lib/libTimer.a
+	${CC} ${CFLAGS} ${LDFLAGS} -o $@ $^
 
-load: toy.elf
+load: main.elf
 	msp430loader.sh $^
 
-clean: $^
-	rm -f *.o *.c~ *.h~ *~ *.c# *.elf
+main-s.elf: ${COMMON_OBJECTS} main.o switches.o led.o buzzer.o ../lib/libTimer.a
+	${CC} ${CFLAGS} ${LDFLAGS} -o $@ $^
 
-main.o: buzzer.h led.h state_machines.h switches.h
+load-s: main-s.elf
+	msp430loader.sh $^
 
-buzzer.o: buzzer.h
-led.o: led.c led.h
-switches.o: led.h switches.h
+clean:
+	rm -f *.o *.elf
 
-dim_sequence.o: led.h state_machines.h
-state_machines.o: buzzer.h buzzer_notes.h led.h state_machines.h switches.h
-
-wdInterruptHandler.o:  buzzer.h led.h state_machines.h switches.h
-p2_interrupt_handler.o: switches.h

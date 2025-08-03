@@ -6,10 +6,8 @@
 #define LEDS (BIT0 | BIT6)
 
 void led_init();
-void led_update();
-void red_on(int on);
-void green_on(int on);
-void leds_on(int on);
-void swap_leds(int on);
+void led_off();
+void alternate_led();
+void blink_leds();
 
 #endif // included
